@@ -4,6 +4,7 @@ import StoreContext from '../../context/StoreContext';
 import EmptyCart from './EmptyCart';
 // import AddedToCart from './AddedToCart';
 import ItemList from './ItemList';
+import butler from '../../images/butler.svg';
 import { colors, button, dropdown, spacing } from '../../utils/styles';
 import { Text } from '../shared/Typography';
 
@@ -30,8 +31,23 @@ const CostBlock = styled('div')`
   font-size: 0.875rem;
   margin: ${spacing.sm}px 0;
   text-align: right;
-  background: ${props => (props.isLoading ? colors.brandBright : 'inherit')};
-  transition: background-color 0.5s ease;
+  /* background: ${props =>
+    props.isLoading ? colors.brandBright : 'inherit'}; */
+  position: relative;
+
+  ::before {
+    background-color: ${colors.lightest}dd;
+    bottom: 0;
+    content: '';
+    display: block;
+    left: 0;
+    opacity: ${props => (props.isLoading ? 1 : 0)};
+    position: absolute;
+    top: 0;
+    transition: opacity 0.5s ease;
+    right: 0;
+    z-index: 2;
+  }
 `;
 
 const PriceBox = styled('span')`
