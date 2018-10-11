@@ -4,7 +4,6 @@ import StoreContext from '../../context/StoreContext';
 import EmptyCart from './EmptyCart';
 // import AddedToCart from './AddedToCart';
 import ItemList from './ItemList';
-import butler from '../../images/butler.svg';
 import { colors, button, dropdown, spacing } from '../../utils/styles';
 import { Text } from '../shared/Typography';
 
@@ -31,8 +30,6 @@ const CostBlock = styled('div')`
   font-size: 0.875rem;
   margin: ${spacing.sm}px 0;
   text-align: right;
-  /* background: ${props =>
-    props.isLoading ? colors.brandBright : 'inherit'}; */
   position: relative;
 
   ::before {
