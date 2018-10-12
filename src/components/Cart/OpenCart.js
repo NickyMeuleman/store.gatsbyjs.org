@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'react-emotion';
+import _ from 'lodash';
 import StoreContext from '../../context/StoreContext';
 import EmptyCart from './EmptyCart';
+
 // import AddedToCart from './AddedToCart';
 import ItemList from './ItemList';
 import { colors, button, dropdown, spacing } from '../../utils/styles';
@@ -105,18 +107,23 @@ class OpenCartComp extends React.Component {
           updateLineItem,
           toggleCart
         }) => {
-          const setCartLoading = bool => this.setState({ isLoading: bool });
-          const handleRemove = itemID => event => {
+          const handleRemove = itemID => async event => {
             event.preventDefault();
-            removeLineItem(client, checkout.id, itemID);
+            this.setState({ isLoading: true });
+            await removeLineItem(client, checkout.id, itemID);
+            this.setState({ isLoading: false });
           };
-          const handleQuantityChange = lineItemID => async quantity => {
-            if (!quantity) {
-              return;
-            }
-            await updateLineItem(client, checkout.id, lineItemID, quantity);
-            setCartLoading(false);
+          const handleQuantityChange = lineItemID => quantity => {
+            console.log('not debouced');
+            // this.setState({ isLoading: true });
+            debouncedFn(client, checkout.id, lineItemID, quantity);
           };
+
+          const debouncedFn = _.debounce(async (...args) => {
+            console.log('debounced');
+            await updateLineItem(...args);
+            this.setState({ isLoading: false });
+          }, 500);
 
           return (
             isCartOpen && (
@@ -135,7 +142,6 @@ class OpenCartComp extends React.Component {
                       items={checkout.lineItems}
                       handleRemove={handleRemove}
                       updateQuantity={handleQuantityChange}
-                      setCartLoading={setCartLoading}
                     />
                     <CostBlock isLoading={this.state.isLoading}>
                       <CostDetails>

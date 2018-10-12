@@ -8,7 +8,7 @@ const ItemList = styled('ul')`
   padding: 0;
 `;
 
-export default ({ items, handleRemove, updateQuantity, setCartLoading }) => (
+export default ({ items, handleRemove, updateQuantity }) => (
   <ItemList>
     {items.map(item => (
       <LineItem
@@ -16,7 +16,6 @@ export default ({ items, handleRemove, updateQuantity, setCartLoading }) => (
         item={item}
         handleRemove={handleRemove(item.id)}
         updateQuantity={updateQuantity(item.id)}
-        setCartLoading={setCartLoading}
       />
     ))}
   </ItemList>

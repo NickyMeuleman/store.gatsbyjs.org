@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
-import _ from 'lodash';
 import ProductImage from './ProductImage';
 import {
   colors,
@@ -103,23 +102,12 @@ class LineItem extends React.Component {
     const value = target.value;
 
     this.setState({ quantity: value });
-    this.props.setCartLoading(true);
-    this.debouncedUpdateQuantity(value);
+    this.props.updateQuantity(value);
   };
 
-  debouncedUpdateQuantity = _.debounce(
-    quantity => this.props.updateQuantity(quantity),
-    500
-  );
-
-  removeHandler = event => {
-    this.props.setCartLoading(true);
-    this.props.handleRemove(event);
-  };
-
-  componentWillUnmount() {
-    this.props.setCartLoading(false);
-  }
+  // componentWillUnmount() {
+  //   this.props.setCartLoading(false);
+  // }
 
   render() {
     const { item } = this.props;
@@ -151,7 +139,7 @@ class LineItem extends React.Component {
         <Remove
           href="#remove"
           title="Remove this item from your cart."
-          onClick={this.removeHandler}
+          onClick={this.props.handleRemove}
         >
           &times;
         </Remove>
